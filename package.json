@@ -1,0 +1,42 @@
+{
+	"private": true,
+	"type": "module",
+	"workspaces": [
+		"vendor/narsil/*"
+	],
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build"
+	},
+	"devDependencies": {
+		"@inertiajs/react": "^1.0",
+		"@tailwindcss/typography": "^0.5",
+		"@types/lodash": "^4.17",
+		"@types/react": "^18.2",
+		"@types/react-dom": "^18.2",
+		"class-variance-authority": "^0.7",
+		"clsx": "^2.1",
+		"cmdk": "^1.0",
+		"lodash": "^4.17",
+		"lucide-react": "^0.424",
+		"postcss": "^8.4",
+		"prettier": "^3.3.3",
+		"prettier-plugin-tailwindcss": "^0.6.5",
+		"react": "^18.2",
+		"react-dom": "^18.2",
+		"react-use": "^17.4",
+		"sass": "^1.69",
+		"tailwindcss": "^3.4",
+		"typescript": "^5.3",
+		"ziggy-js": "^2.3",
+		"zustand": "^4.5"
+	},
+	"dependencies": {
+		"@dnd-kit/core": "^6.1",
+		"@dnd-kit/modifiers": "^7.0.0",
+		"@dnd-kit/sortable": "^8.0",
+		"@tanstack/react-table": "^8.11",
+		"html-react-parser": "^5.1",
+		"moment": "^2.30"
+	}
+}

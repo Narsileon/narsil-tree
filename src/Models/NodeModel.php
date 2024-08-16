@@ -1,0 +1,301 @@
+<?php
+
+namespace App\Models\Abstracts;
+
+#region USE
+
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+
+#endregion
+
+/**
+ * @version 1.0.0
+ *
+ * @author Jonathan Rigaux
+ */
+abstract class NodeModel extends Model
+{
+    #region CONSTRUCTOR
+
+    /**
+     * @param array $attributes
+     * @param string $table
+     *
+     * @return void
+     */
+    public function __construct(array $attributes = [])
+    {
+        $this->guarded = array_merge($this->guarded, [
+            self::ID
+        ]);
+
+        $this->hidden = array_merge($this->hidden, [
+            self::CREATED_AT,
+            self::UPDATED_AT,
+        ]);
+
+        $this->table = self::TABLE;
+
+        parent::__construct($attributes);
+    }
+
+    #endregion
+
+    #region CONSTANTS
+
+    /**
+     * @var string
+     */
+    final public const LABEL = "label";
+    /**
+     * @var string
+     */
+    final public const LEFT_ID = "left_id";
+    /**
+     * @var string
+     */
+    final public const ID = "id";
+    /**
+     * @var string
+     */
+    final public const PARENT_ID = "parent_id";
+    /**
+     * @var string
+     */
+    final public const RIGHT_ID = "right_id";
+
+    /**
+     * @var string
+     */
+    final public const TARGET_ID = "target_id";
+    /**
+     * @var string
+     */
+    final public const TARGET_TYPE = "target_type";
+
+    /**
+     * @var string
+     */
+    final public const ATTRIBUTE_ENTITY_ID = "entity_id";
+    /**
+     * @var string
+     */
+    final public const ATTRIBUTE_PARENT_ENTITY_ID = "parent_entity_id";
+
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_CHILDREN = "children";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_LEFT = "left";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_LEFTS = "lefts";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_PARENT = "parent";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_RIGHT = "right";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_RIGHTS = "rights";
+    /**
+     * @var string
+     */
+    final public const RELATIONSHIP_TARGET = "target";
+
+    /**
+     * @var string
+     */
+    public const TABLE = "nodes";
+
+    #endregion
+
+    #region RELATIONSHIPS
+
+    /**
+     * @return HasMany Return the children nodes.
+     */
+    final public function children(): HasMany
+    {
+        return $this->hasMany(
+            static::class,
+            self::PARENT_ID,
+            self::ID
+        );
+    }
+
+    /**
+     * @return HasOne Returns the node on the left.
+     */
+    final public function left(): HasOne
+    {
+        return $this->hasOne(
+            static::class,
+            self::ID,
+            self::LEFT_ID
+        );
+    }
+
+    /**
+     * @return HasMany Returns the nodes on the left.
+     */
+    final public function lefts(): HasMany
+    {
+        return $this->hasMany(
+            static::class,
+            self::RIGHT_ID,
+            self::ID
+        );
+    }
+
+    /**
+     * @return BelongsTo Returns the parent node.
+     */
+    final public function parent(): BelongsTo
+    {
+        return $this->belongsTo(
+            static::class,
+            self::PARENT_ID,
+            self::ID
+        );
+    }
+
+    /**
+     * @return HasOne Returns the node on the right.
+     */
+    final public function right(): HasOne
+    {
+        return $this->hasOne(
+            static::class,
+            self::ID,
+            self::RIGHT_ID
+        );
+    }
+
+    /**
+     * @return HasMany Returns the nodes on the right.
+     */
+    final public function rights(): HasMany
+    {
+        return $this->hasMany(
+            static::class,
+            self::LEFT_ID,
+            self::ID
+        );
+    }
+
+    /**
+     * @return HasOne
+     */
+    abstract public function target(): HasOne;
+
+    #endregion
+
+    #region SCOPES
+
+    /**
+     * @param Builder $query
+     * @param array $tree
+     *
+     * @return void
+     */
+    final public function scopeRebuildTree(Builder $query, array $tree = []): void
+    {
+        $nodes = $query
+            ->with([
+                self::RELATIONSHIP_LEFT,
+                self::RELATIONSHIP_PARENT,
+                self::RELATIONSHIP_RIGHT
+            ])
+            ->get()
+            ->keyBy(self::ID);
+
+        $this->rebuildTreeRecursively($nodes, $tree);
+    }
+
+    #endregion
+
+    #region PRIVATE METHODS
+
+    /**
+     * @param Collection $nodes
+     * @param array $data
+     * @param NodeModel|null $parent
+     *
+     * @return void
+     */
+    private function rebuildTreeRecursively(Collection $nodes, array $data, NodeModel $parent = null): void
+    {
+        $nodeIds = collect($data)->pluck(self::ID);
+
+        $branchNodes = $nodeIds->map(function ($id) use ($nodes)
+        {
+            return $nodes[$id] ?? null;
+        })->filter();
+
+        $dataCollection = collect($data)->keyBy(self::ID);
+
+        $branchNodes->each(function ($branchNode, $index) use ($branchNodes, $dataCollection, $nodes, $parent)
+        {
+            $originalParent = $branchNode->{self::RELATIONSHIP_PARENT};
+
+            if (
+                ($originalParent || $parent) &&
+                $originalParent?->{static::TARGET_ID} !== $parent?->{static::TARGET_ID}
+            )
+            {
+                $branchNode->fill([
+                    self::PARENT_ID => $parent?->{self::ID} ?? null,
+                ]);
+            }
+
+            $originalLeftNode = $branchNode->{self::RELATIONSHIP_LEFT};
+            $leftNode = $branchNodes->get($index - 1);
+
+            if (
+                $leftNode?->{static::TARGET_ID} !== $originalLeftNode?->{static::TARGET_ID}
+                && $leftNode?->{self::RIGHT_ID} !== $branchNode?->{self::ID}
+            )
+            {
+                $branchNode->fill([
+                    self::LEFT_ID => $leftNode?->{self::ID},
+                ]);
+
+                $leftNode?->fill([
+                    self::RIGHT_ID => $branchNode?->{self::ID},
+                ]);
+            }
+
+            $branchNode->save();
+
+            if ($leftNode && $leftNode->isDirty())
+            {
+                $leftNode->fill([
+                    self::RIGHT_ID => $branchNode?->{self::ID},
+                ]);
+
+                $leftNode->save();
+            }
+
+            if ($children = $dataCollection->get($branchNode->{self::ID})[self::RELATIONSHIP_CHILDREN] ?? null)
+            {
+                $this->rebuildTreeRecursively($nodes, $children, $branchNode);
+            }
+        });
+    }
+
+    #endregion
+}
