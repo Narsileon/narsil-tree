@@ -44,6 +44,8 @@ final class NodeBlueprint
             ->constrained($tableName, NodeModel::ID)
             ->nullOnDelete();
         $table
+            ->nullableMorphs(NodeModel::RELATIONSHIP_TARGET);
+        $table
             ->trans(NodeModel::LABEL);
     }
 
