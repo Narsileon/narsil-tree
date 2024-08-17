@@ -1,17 +1,17 @@
 import { AnimateLayoutChanges, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import * as React from "react";
-import TreeItem, { TreeItemProps } from "./TreeItem";
+import TreeNode, { TreeNodeProps } from "./TreeNode";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
-export interface SortableTreeItemProps extends TreeItemProps {
+export interface SortableTreeNodeProps extends TreeNodeProps {
 	id: UniqueIdentifier;
 }
 
 const animateLayoutChanges: AnimateLayoutChanges = ({ isSorting, wasDragging }) =>
 	isSorting || wasDragging ? false : true;
 
-const SortableTreeItem = ({ id, depth, ...props }: SortableTreeItemProps) => {
+const TreeNodeSortable = ({ id, depth, ...props }: SortableTreeNodeProps) => {
 	const {
 		attributes,
 		isDragging,
@@ -32,7 +32,7 @@ const SortableTreeItem = ({ id, depth, ...props }: SortableTreeItemProps) => {
 	};
 
 	return (
-		<TreeItem
+		<TreeNode
 			ref={setDraggableNodeRef}
 			wrapperRef={setDroppableNodeRef}
 			style={style}
@@ -48,4 +48,4 @@ const SortableTreeItem = ({ id, depth, ...props }: SortableTreeItemProps) => {
 	);
 };
 
-export default SortableTreeItem;
+export default TreeNodeSortable;

@@ -1,4 +1,4 @@
-import { getProjection } from "./utilities";
+import { getProjection } from "./treeUtils";
 import { SensorContext } from "./Tree";
 
 import {

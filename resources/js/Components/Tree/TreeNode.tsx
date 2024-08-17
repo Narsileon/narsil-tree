@@ -3,7 +3,7 @@ import { cn } from "@narsil-ui/Components";
 import * as React from "react";
 import Button from "@narsil-ui/Components/Button/Button";
 
-export interface TreeItemProps extends Omit<React.HTMLAttributes<HTMLLIElement>, "id"> {
+export interface TreeNodeProps extends Omit<React.HTMLAttributes<HTMLLIElement>, "id"> {
 	childCount?: number;
 	clone?: boolean;
 	collapsed?: boolean;
@@ -20,7 +20,7 @@ export interface TreeItemProps extends Omit<React.HTMLAttributes<HTMLLIElement>,
 	wrapperRef?(node: HTMLLIElement): void;
 }
 
-const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
+const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 	(
 		{
 			childCount,
@@ -102,4 +102,4 @@ const TreeItem = React.forwardRef<HTMLDivElement, TreeItemProps>(
 	}
 );
 
-export default TreeItem;
+export default TreeNode;

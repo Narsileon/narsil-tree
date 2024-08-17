@@ -3,8 +3,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import * as React from "react";
 import keyboardCoordinates from "./keyboardCoordinates";
-import SortableTreeItem from "./TreeItem/SortableTreeItem";
-import type { FlattenedItem } from "./utilities";
+import TreeNodeSortable from "./TreeNodeSortable";
 
 import {
 	Announcements,
@@ -28,45 +27,19 @@ import {
 
 import {
 	buildTree,
+	FlattenedItem,
 	flattenTree,
-	getProjection,
 	getChildCount,
-	removeItem,
+	getProjection,
 	removeChildrenOf,
+	removeItem,
 	setProperty,
-} from "./utilities";
+} from "./treeUtils";
 
 export type SensorContext = React.MutableRefObject<{
 	items: FlattenedItem[];
 	offset: number;
 }>;
-
-const initialItems: TreeItem[] = [
-	{
-		id: "Home",
-		children: [],
-	},
-	{
-		id: "Collections",
-		children: [
-			{ id: "Spring", children: [] },
-			{ id: "Summer", children: [] },
-			{ id: "Fall", children: [] },
-			{ id: "Winter", children: [] },
-		],
-	},
-	{
-		id: "About Us",
-		children: [],
-	},
-	{
-		id: "My Account",
-		children: [
-			{ id: "Addresses", children: [] },
-			{ id: "Order History", children: [] },
-		],
-	},
-];
 
 const measuring = {
 	droppable: {
@@ -99,7 +72,7 @@ const dropAnimationConfig: DropAnimation = {
 
 interface Props {
 	collapsible?: boolean;
-	defaultItems?: TreeItem[];
+	defaultItems: NodeType[];
 	indentationWidth?: number;
 	indicator?: boolean;
 	removable?: boolean;
@@ -107,7 +80,7 @@ interface Props {
 
 export function SortableTree({
 	collapsible,
-	defaultItems = initialItems,
+	defaultItems,
 	indicator = false,
 	indentationWidth = 50,
 	removable,
@@ -189,10 +162,10 @@ export function SortableTree({
 				strategy={verticalListSortingStrategy}
 			>
 				{flattenedItems.map(({ id, children, collapsed, depth }) => (
-					<SortableTreeItem
+					<TreeNodeSortable
 						key={id}
 						id={id}
-						value={id as string}
+						value={id}
 						depth={id === activeId && projected ? projected.depth : depth}
 						indentationWidth={indentationWidth}
 						indicator={indicator}
@@ -207,7 +180,7 @@ export function SortableTree({
 						modifiers={indicator ? [adjustTranslate] : undefined}
 					>
 						{activeId && activeItem ? (
-							<SortableTreeItem
+							<TreeNodeSortable
 								id={activeId}
 								depth={activeItem.depth}
 								clone
@@ -255,9 +228,9 @@ export function SortableTree({
 			const clonedItems: FlattenedItem[] = JSON.parse(JSON.stringify(flattenTree(items)));
 			const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
 			const activeIndex = clonedItems.findIndex(({ id }) => id === active.id);
-			const activeTreeItem = clonedItems[activeIndex];
+			const activeTreeNode = clonedItems[activeIndex];
 
-			clonedItems[activeIndex] = { ...activeTreeItem, depth, parentId };
+			clonedItems[activeIndex] = { ...activeTreeNode, depth, parentId };
 
 			const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
 			const newItems = buildTree(sortedItems);
