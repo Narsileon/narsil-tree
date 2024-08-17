@@ -46,9 +46,9 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 			<li
 				className={cn(
 					"box-border list-none",
-					clone && "pointer-events-none inline-block p-0 pl-[10px] pt-[5px]",
+					clone && "pointer-events-none inline-block p-0 pl-2 pt-1",
 					ghost && "opacity-50",
-					indicator && "relative z-[1] -mb-[1px] opacity-100",
+					indicator && "relative z-10 -mb-[1px] opacity-100",
 					disableSelection && "select-none",
 					disableInteraction && "pointer-events-none"
 				)}
@@ -62,9 +62,9 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 			>
 				<div
 					className={cn(
-						"relative box-border flex items-center border border-[#dedede] bg-white px-[10px] py-[var(--vertical-padding)] text-[#222]",
-						clone && "rounded-[4px] pr-[24px] shadow-[0px_15px_15px_0_rgba(34,33,81,0.1)]",
-						ghost && indicator && "relative h-[8px] border-[#2389ff] bg-[#56a1f8] p-0",
+						"relative box-border flex items-center border bg-white px-2 py-[var(--vertical-padding)] text-[#222]",
+						clone && "rounded pr-6 shadow",
+						ghost && indicator && "relative h-2 border-[#2389ff] bg-[#56a1f8] p-0",
 						ghost && !indicator && "bg-transparent shadow-none"
 					)}
 					ref={ref}
@@ -77,7 +77,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 					{onCollapse && (
 						<Button
 							className={cn(
-								"ease transition-transform duration-[250ms]",
+								"ease transition-transform duration-300",
 								collapsed && "rotate-[-90deg] transform"
 							)}
 							onClick={onCollapse}
@@ -85,14 +85,14 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 							<ChevronDown />
 						</Button>
 					)}
-					<span className='flex-grow overflow-hidden truncate pl-[0.5rem]'>{value}</span>
+					<span className='flex-grow overflow-hidden truncate pl-2'>{value}</span>
 					{!clone && onRemove && (
 						<Button onClick={onRemove}>
 							<X />
 						</Button>
 					)}
 					{clone && childCount && childCount > 1 ? (
-						<span className='absolute -right-[10px] -top-[10px] flex h-[24px] w-[24px] items-center justify-center rounded-full bg-[#2389ff] text-[0.8rem] font-semibold text-white'>
+						<span className='absolute -right-[10px] -top-[10px] flex h-6 w-6 items-center justify-center rounded-full bg-[#2389ff] text-sm font-semibold text-white'>
 							{childCount}
 						</span>
 					) : null}
