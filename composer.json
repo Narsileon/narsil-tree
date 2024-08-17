@@ -60,7 +60,7 @@
 	"extra": {
 		"laravel": {
 			"providers": [
-				"Narsil\\Tree\\NarsilTableServiceProvider"
+				"Narsil\\Tree\\NarsilTreeServiceProvider"
 			]
 		}
 	},
