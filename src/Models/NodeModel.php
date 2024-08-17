@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 #endregion
 
@@ -198,9 +199,9 @@ abstract class NodeModel extends Model
     }
 
     /**
-     * @return BelongsTo
+     * @return MorphTo
      */
-    abstract public function target(): BelongsTo;
+    abstract public function target(): MorphTo;
 
     #endregion
 
