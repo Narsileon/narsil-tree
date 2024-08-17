@@ -18,33 +18,27 @@
 	"repositories": [
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-forms.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-forms.git"
 		},
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-localization.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-localization.git"
 		},
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-menus.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-menus.git"
 		},
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-policies.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-policies.git"
 		},
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-storage.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-storage.git"
 		},
 		{
 			"type": "vcs",
-			"url": "git@github.com:Narsileon/narsil-ui.git",
-			"no-api": true
+			"url": "git@github.com:Narsileon/narsil-ui.git"
 		}
 	],
 	"require": {
