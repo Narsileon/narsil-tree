@@ -198,9 +198,9 @@ abstract class NodeModel extends Model
     }
 
     /**
-     * @return HasOne
+     * @return BelongsTo
      */
-    abstract public function target(): HasOne;
+    abstract public function target(): BelongsTo;
 
     #endregion
 
