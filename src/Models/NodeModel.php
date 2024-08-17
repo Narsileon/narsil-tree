@@ -49,75 +49,75 @@ abstract class NodeModel extends Model
     /**
      * @var string
      */
-    final public const LABEL = "label";
+    final public const LABEL = 'label';
     /**
      * @var string
      */
-    final public const LEFT_ID = "left_id";
+    final public const LEFT_ID = 'left_id';
     /**
      * @var string
      */
-    final public const ID = "id";
+    final public const ID = 'id';
     /**
      * @var string
      */
-    final public const PARENT_ID = "parent_id";
+    final public const PARENT_ID = 'parent_id';
     /**
      * @var string
      */
-    final public const RIGHT_ID = "right_id";
+    final public const RIGHT_ID = 'right_id';
 
     /**
      * @var string
      */
-    final public const TARGET_ID = "target_id";
+    final public const TARGET_ID = 'target_id';
     /**
      * @var string
      */
-    final public const TARGET_TYPE = "target_type";
+    final public const TARGET_TYPE = 'target_type';
 
     /**
      * @var string
      */
-    final public const ATTRIBUTE_ENTITY_ID = "entity_id";
+    final public const ATTRIBUTE_ENTITY_ID = 'entity_id';
     /**
      * @var string
      */
-    final public const ATTRIBUTE_PARENT_ENTITY_ID = "parent_entity_id";
+    final public const ATTRIBUTE_PARENT_ENTITY_ID = 'parent_entity_id';
 
     /**
      * @var string
      */
-    final public const RELATIONSHIP_CHILDREN = "children";
+    final public const RELATIONSHIP_CHILDREN = 'children';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_LEFT = "left";
+    final public const RELATIONSHIP_LEFT = 'left';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_LEFTS = "lefts";
+    final public const RELATIONSHIP_LEFTS = 'lefts';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_PARENT = "parent";
+    final public const RELATIONSHIP_PARENT = 'parent';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_RIGHT = "right";
+    final public const RELATIONSHIP_RIGHT = 'right';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_RIGHTS = "rights";
+    final public const RELATIONSHIP_RIGHTS = 'rights';
     /**
      * @var string
      */
-    final public const RELATIONSHIP_TARGET = "target";
+    final public const RELATIONSHIP_TARGET = 'target';
 
     /**
      * @var string
      */
-    public const TABLE = "nodes";
+    public const TABLE = 'nodes';
 
     #endregion
 
