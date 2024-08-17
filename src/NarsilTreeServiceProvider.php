@@ -4,7 +4,9 @@ namespace Narsil\Tree;
 
 #region USE
 
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\ServiceProvider;
+use Narsil\Tree\Blueprints\NodeBlueprint;
 
 #endregion
 
@@ -15,4 +17,30 @@ use Illuminate\Support\ServiceProvider;
  */
 final class NarsilTreeServiceProvider extends ServiceProvider
 {
+    #region PUBLIC METHODS
+
+    /**
+     * @return void
+     */
+    public function boot(): void
+    {
+        $this->bootBlueprints();
+    }
+
+    #endregion
+
+    #region PRIVATE METHODS
+
+    /**
+     * @return void
+     */
+    private function bootBlueprints(): void
+    {
+        Blueprint::macro('node', function (string $column)
+        {
+            NodeBlueprint::define($this, $column);
+        });
+    }
+
+    #endregion
 }

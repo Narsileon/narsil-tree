@@ -35,10 +35,7 @@ abstract class NodeModel extends Model
             self::ID
         ]);
 
-        $this->hidden = array_merge($this->hidden, [
-            self::CREATED_AT,
-            self::UPDATED_AT,
-        ]);
+        $this->timestamps = false;
 
         $this->table = self::TABLE;
 
