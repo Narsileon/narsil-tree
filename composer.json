@@ -3,8 +3,10 @@
 	"description": "Narsil tree",
 	"license": "MIT",
 	"keywords": [
-		"narsil",
+		"inertia",
 		"laravel",
+		"narsil",
+		"php",
 		"react",
 		"tree"
 	],
@@ -26,7 +28,17 @@
 		},
 		{
 			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-menus.git",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
 			"url": "git@github.com:Narsileon/narsil-policies.git",
+			"no-api": true
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-storage.git",
 			"no-api": true
 		},
 		{
