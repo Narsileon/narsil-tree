@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "58d2e44845b20359dbf638f8c3e14225",
+    "content-hash": "3395c0884937ab033b5500bdd104b6e5",
     "packages": [
         {
             "name": "brick/math",
@@ -1377,16 +1377,16 @@
         },
         {
             "name": "league/commonmark",
-            "version": "2.5.1",
+            "version": "2.5.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/thephpleague/commonmark.git",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c"
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/ac815920de0eff6de947eac0a6a94e5ed0fb147c",
-                "reference": "ac815920de0eff6de947eac0a6a94e5ed0fb147c",
+                "url": "https://api.github.com/repos/thephpleague/commonmark/zipball/b650144166dfa7703e62a22e493b853b58d874b0",
+                "reference": "b650144166dfa7703e62a22e493b853b58d874b0",
                 "shasum": ""
             },
             "require": {
@@ -1399,8 +1399,8 @@
             },
             "require-dev": {
                 "cebe/markdown": "^1.0",
-                "commonmark/cmark": "0.31.0",
-                "commonmark/commonmark.js": "0.31.0",
+                "commonmark/cmark": "0.31.1",
+                "commonmark/commonmark.js": "0.31.1",
                 "composer/package-versions-deprecated": "^1.8",
                 "embed/embed": "^4.4",
                 "erusev/parsedown": "^1.0",
@@ -1479,7 +1479,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-24T12:52:09+00:00"
+            "time": "2024-08-16T11:46:16+00:00"
         },
         {
             "name": "league/config",
@@ -1858,12 +1858,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Narsileon/narsil-forms.git",
-                "reference": "fbb6e2866bdf1372ee092d0b0b8f5b58e9ee7f47"
+                "reference": "ab9e9d6d3cf02eb4e7303930ff5b0ba09542e78f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Narsileon/narsil-forms/zipball/fbb6e2866bdf1372ee092d0b0b8f5b58e9ee7f47",
-                "reference": "fbb6e2866bdf1372ee092d0b0b8f5b58e9ee7f47",
+                "url": "https://api.github.com/repos/Narsileon/narsil-forms/zipball/ab9e9d6d3cf02eb4e7303930ff5b0ba09542e78f",
+                "reference": "ab9e9d6d3cf02eb4e7303930ff5b0ba09542e78f",
                 "shasum": ""
             },
             "require": {
@@ -1905,7 +1905,7 @@
                 "laravel",
                 "narsil"
             ],
-            "time": "2024-08-13T08:54:40+00:00"
+            "time": "2024-08-16T12:25:58+00:00"
         },
         {
             "name": "narsil/localization",
@@ -1913,12 +1913,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Narsileon/narsil-localization.git",
-                "reference": "db3e0f2706f6a25b07175f748f688979340e884e"
+                "reference": "72e4dcb7b54091ba593bd581b59f106d5806e88a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Narsileon/narsil-localization/zipball/db3e0f2706f6a25b07175f748f688979340e884e",
-                "reference": "db3e0f2706f6a25b07175f748f688979340e884e",
+                "url": "https://api.github.com/repos/Narsileon/narsil-localization/zipball/72e4dcb7b54091ba593bd581b59f106d5806e88a",
+                "reference": "72e4dcb7b54091ba593bd581b59f106d5806e88a",
                 "shasum": ""
             },
             "require": {
@@ -1960,7 +1960,7 @@
                 "react",
                 "translations"
             ],
-            "time": "2024-08-10T15:08:24+00:00"
+            "time": "2024-08-13T18:09:48+00:00"
         },
         {
             "name": "narsil/policies",
@@ -2020,12 +2020,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:Narsileon/narsil-ui.git",
-                "reference": "172fa72ec8f049cccfcc61542c864bf35367bf02"
+                "reference": "860e774fe7e535be090c7439addcdd9329c822d3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Narsileon/narsil-ui/zipball/172fa72ec8f049cccfcc61542c864bf35367bf02",
-                "reference": "172fa72ec8f049cccfcc61542c864bf35367bf02",
+                "url": "https://api.github.com/repos/Narsileon/narsil-ui/zipball/860e774fe7e535be090c7439addcdd9329c822d3",
+                "reference": "860e774fe7e535be090c7439addcdd9329c822d3",
                 "shasum": ""
             },
             "require": {
@@ -2065,7 +2065,7 @@
                 "react",
                 "ui"
             ],
-            "time": "2024-08-13T02:10:01+00:00"
+            "time": "2024-08-16T11:08:23+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -7328,7 +7328,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "narsil/forms": 20,
         "narsil/localization": 20,
         "narsil/ui": 20
     },

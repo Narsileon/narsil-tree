@@ -1,0 +1,25 @@
+{
+	"compilerOptions": {
+		"allowImportingTsExtensions": true,
+		"declaration": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"lib": ["DOM", "DOM.iterable", "ESNext"],
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"@narsil-tree/*": ["./resources/js/*"],
+			"@narsil-ui/*": ["./vendor/narsil/ui/resources/js/*"]
+		},
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "ESNext"
+	},
+	"include": ["resources/js/**/*.ts", "resources/js/**/*.tsx", "vendor/narsil/**/*.ts", "vendor/narsil/**/*.tsx"],
+	"exclude": ["node_modules"]
+}

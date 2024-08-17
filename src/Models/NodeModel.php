@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Abstracts;
+namespace Narsil\Tree\Models;
 
 #region USE
 
@@ -231,66 +231,35 @@ abstract class NodeModel extends Model
     #region PRIVATE METHODS
 
     /**
-     * @param Collection $nodes
+     * @param Collection<integer,NodeModel> $nodes
      * @param array $data
-     * @param NodeModel|null $parent
+     * @param NodeModel|null $parentNode
      *
      * @return void
      */
-    private function rebuildTreeRecursively(Collection $nodes, array $data, NodeModel $parent = null): void
+    private function rebuildTreeRecursively(Collection $nodes, array $data, NodeModel $parentNode = null): void
     {
-        $nodeIds = collect($data)->pluck(self::ID);
+        $branchData = collect($data)->keyBy(self::ID);
 
-        $branchNodes = $nodeIds->map(function ($id) use ($nodes)
+        $branchNodes = $branchData->keys()->map(function ($id) use ($nodes)
         {
             return $nodes[$id] ?? null;
         })->filter();
 
-        $dataCollection = collect($data)->keyBy(self::ID);
-
-        $branchNodes->each(function ($branchNode, $index) use ($branchNodes, $dataCollection, $nodes, $parent)
+        $branchNodes->each(function ($branchNode, $index) use ($branchNodes, $branchData, $nodes, $parentNode)
         {
-            $originalParent = $branchNode->{self::RELATIONSHIP_PARENT};
-
-            if (
-                ($originalParent || $parent) &&
-                $originalParent?->{static::TARGET_ID} !== $parent?->{static::TARGET_ID}
-            )
-            {
-                $branchNode->fill([
-                    self::PARENT_ID => $parent?->{self::ID} ?? null,
-                ]);
-            }
-
-            $originalLeftNode = $branchNode->{self::RELATIONSHIP_LEFT};
             $leftNode = $branchNodes->get($index - 1);
+            $rightNode = $branchNodes->get($index + 1);
 
-            if (
-                $leftNode?->{static::TARGET_ID} !== $originalLeftNode?->{static::TARGET_ID}
-                && $leftNode?->{self::RIGHT_ID} !== $branchNode?->{self::ID}
-            )
-            {
-                $branchNode->fill([
-                    self::LEFT_ID => $leftNode?->{self::ID},
-                ]);
-
-                $leftNode?->fill([
-                    self::RIGHT_ID => $branchNode?->{self::ID},
-                ]);
-            }
+            $branchNode->fill([
+                self::LEFT_ID => $leftNode?->{self::ID},
+                self::PARENT_ID => $parentNode?->{self::ID},
+                self::RIGHT_ID => $rightNode?->{self::ID},
+            ]);
 
             $branchNode->save();
 
-            if ($leftNode && $leftNode->isDirty())
-            {
-                $leftNode->fill([
-                    self::RIGHT_ID => $branchNode?->{self::ID},
-                ]);
-
-                $leftNode->save();
-            }
-
-            if ($children = $dataCollection->get($branchNode->{self::ID})[self::RELATIONSHIP_CHILDREN] ?? null)
+            if ($children = $branchData->get($branchNode->{self::ID})[self::RELATIONSHIP_CHILDREN] ?? null)
             {
                 $this->rebuildTreeRecursively($nodes, $children, $branchNode);
             }
