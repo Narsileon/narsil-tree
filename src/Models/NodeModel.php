@@ -198,7 +198,14 @@ abstract class NodeModel extends Model
     /**
      * @return MorphTo
      */
-    abstract public function target(): MorphTo;
+    final public function target(): MorphTo
+    {
+        return $this->morphTo(
+            self::RELATIONSHIP_TARGET,
+            self::TARGET_TYPE,
+            self::TARGET_ID
+        );
+    }
 
     #endregion
 
