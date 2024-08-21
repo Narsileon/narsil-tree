@@ -6,7 +6,7 @@ export type NodeType = {
 	id: UniqueIdentifier;
 };
 
-export type NodeModel = {
+export type NodeModel<T = any> = {
 	children: NodeModel[];
 	id: number;
 	label: string | null;
@@ -18,4 +18,7 @@ export type NodeModel = {
 	right_id: number | null;
 	right?: NodeModel | null;
 	rights?: NodeModel[];
+	target_id: number | null;
+	target_type: string | null;
+	target?: T;
 };
