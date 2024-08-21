@@ -1,5 +1,5 @@
 import { arrayMove } from "@dnd-kit/sortable";
-import type { NodeType } from "@narsil-tree/TreeModels";
+import type { NodeType } from "@narsil-tree/Types";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 export interface FlattenedItem extends NodeType {
