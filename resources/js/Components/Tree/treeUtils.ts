@@ -1,4 +1,5 @@
 import { arrayMove } from "@dnd-kit/sortable";
+import type { NodeType } from "@narsil-tree/TreeModels";
 import type { UniqueIdentifier } from "@dnd-kit/core";
 
 export interface FlattenedItem extends NodeType {
@@ -6,8 +7,6 @@ export interface FlattenedItem extends NodeType {
 	depth: number;
 	index: number;
 }
-
-export const iOS = /iPad|iPhone|iPod/.test(navigator.platform);
 
 function getDragDepth(offset: number, indentationWidth: number) {
 	return Math.round(offset / indentationWidth);

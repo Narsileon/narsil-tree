@@ -4,6 +4,7 @@ import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-ki
 import * as React from "react";
 import keyboardCoordinates from "./keyboardCoordinates";
 import TreeNodeSortable from "./TreeNodeSortable";
+import type { NodeType } from "@narsil-tree/TreeModels";
 
 import {
 	Announcements,

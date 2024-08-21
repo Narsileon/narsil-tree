@@ -1,10 +1,12 @@
-type NodeType = {
+import { UniqueIdentifier } from "@dnd-kit/core";
+
+export type NodeType = {
 	children: NodeType[];
 	collapsed?: boolean;
-	id: import("@dnd-kit/core").UniqueIdentifier;
+	id: UniqueIdentifier;
 };
 
-type NodeModel = {
+export type NodeModel = {
 	children: NodeModel[];
 	id: number;
 	label: string | null;
