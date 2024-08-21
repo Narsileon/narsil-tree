@@ -20,5 +20,5 @@ export type NodeModel<T = any> = {
 	rights?: NodeModel[];
 	target_id: number | null;
 	target_type: string | null;
-	target?: T;
+	target: T;
 };
