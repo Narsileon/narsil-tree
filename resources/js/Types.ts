@@ -7,7 +7,7 @@ export type NodeType = {
 };
 
 export type NodeModel<T = any> = {
-	children: NodeModel[];
+	children: NodeModel<T>[];
 	id: number;
 	label: string | null;
 	left_id: number | null;
