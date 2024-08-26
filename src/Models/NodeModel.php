@@ -37,6 +37,10 @@ abstract class NodeModel extends Model
 
         $this->timestamps = false;
 
+        $this->with = [
+            self::RELATIONSHIP_TARGET,
+        ];
+
         parent::__construct($attributes);
     }
 
