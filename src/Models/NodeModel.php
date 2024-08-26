@@ -37,8 +37,6 @@ abstract class NodeModel extends Model
 
         $this->timestamps = false;
 
-        $this->table = self::TABLE;
-
         parent::__construct($attributes);
     }
 
