@@ -1,0 +1,60 @@
+{
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-auth.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-calendar.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-contacts.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-forms.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-legals.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-localization.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-mails.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-menus.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-pages.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-policies.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-settings.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-storage.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-tables.git"
+		},
+		{
+			"type": "vcs",
+			"url": "git@github.com:Narsileon/narsil-ui.git"
+		}
+	]
+}

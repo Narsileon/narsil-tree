@@ -1,20 +1,4 @@
 {
-	"name": "narsil/tree",
-	"description": "Narsil tree",
-	"license": "MIT",
-	"keywords": [
-		"inertia",
-		"laravel",
-		"narsil",
-		"php",
-		"react",
-		"tree"
-	],
-	"authors": [
-		{
-			"name": "Jonathan Rigaux"
-		}
-	],
 	"repositories": [
 		{
 			"type": "path",
@@ -72,33 +56,5 @@
 			"type": "path",
 			"url": "../narsil-ui"
 		}
-	],
-	"require": {
-		"php": "^8.2",
-		"laravel/framework": "^11.3",
-		"narsil/localization": "dev-main",
-		"narsil/ui": "dev-main"
-	},
-	"require-dev": {
-		"phpunit/phpunit": "^11.0"
-	},
-	"minimum-stability": "dev",
-	"prefer-stable": true,
-	"autoload": {
-		"psr-4": {
-			"Narsil\\Tree\\": "src/"
-		}
-	},
-	"extra": {
-		"laravel": {
-			"providers": [
-				"Narsil\\Tree\\NarsilTreeServiceProvider"
-			]
-		}
-	},
-	"config": {
-		"optimize-autoloader": true,
-		"preferred-install": "dist",
-		"sort-packages": true
-	}
+	]
 }
