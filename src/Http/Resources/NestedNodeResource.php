@@ -24,7 +24,7 @@ class NestedNodeResource extends JsonResource
         return [
             NodeModel::ID => $this->{NodeModel::ID},
 
-            NodeModel::RELATIONSHIP_CHILDREN => $this->{NodeModel::RELATIONSHIP_CHILDREN},
+            NodeModel::RELATIONSHIP_CHILDREN => NestedNodeResource::collection($this->{NodeModel::RELATIONSHIP_CHILDREN}),
             NodeModel::RELATIONSHIP_TARGET => $this->{NodeModel::RELATIONSHIP_TARGET},
         ];
     }
