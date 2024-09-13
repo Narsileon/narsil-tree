@@ -1,7 +1,12 @@
-import { ChevronDown, Grab, X } from "lucide-react";
+import { ChevronDown, Ellipsis, GripVertical } from "lucide-react";
 import { cn } from "@narsil-ui/Components";
+import { useTranslationsStore } from "@narsil-localization/Stores/translationStore";
 import * as React from "react";
 import Button from "@narsil-ui/Components/Button/Button";
+import DropdownMenu from "@narsil-ui/Components/DropdownMenu/DropdownMenu";
+import DropdownMenuContent from "@narsil-ui/Components/DropdownMenu/DropdownMenuContent";
+import DropdownMenuItem from "@narsil-ui/Components/DropdownMenu/DropdownMenuItem";
+import DropdownMenuTrigger from "@narsil-ui/Components/DropdownMenu/DropdownMenuTrigger";
 
 export interface TreeNodeProps extends Omit<React.HTMLAttributes<HTMLLIElement>, "id"> {
 	childCount?: number;
@@ -25,77 +30,97 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 		{
 			childCount,
 			clone,
+			collapsed,
 			depth,
-			disableSelection,
 			disableInteraction,
+			disableSelection,
 			ghost,
 			handleProps,
 			indentationWidth,
 			indicator,
-			collapsed,
-			onCollapse,
-			onRemove,
 			style,
 			value,
+			onCollapse,
+			onRemove,
 			wrapperRef,
 			...props
 		},
 		ref
 	) => {
+		const { trans } = useTranslationsStore();
+
 		return (
 			<li
+				ref={wrapperRef}
 				className={cn(
-					"box-border list-none",
+					"box-border",
 					clone && "pointer-events-none inline-block p-0 pl-2 pt-1",
 					ghost && "opacity-50",
 					indicator && "relative z-10 -mb-[1px] opacity-100",
 					disableSelection && "select-none",
 					disableInteraction && "pointer-events-none"
 				)}
-				ref={wrapperRef}
 				style={
 					{
-						"--spacing": `${indentationWidth * depth}px`,
+						paddingLeft: `${depth * 2}rem`,
 					} as React.CSSProperties
 				}
 				{...props}
 			>
 				<div
+					ref={ref}
 					className={cn(
-						"relative box-border flex items-center border bg-white px-2 py-[var(--vertical-padding)] text-[#222]",
-						clone && "rounded pr-6 shadow",
-						ghost && indicator && "relative h-2 border-[#2389ff] bg-[#56a1f8] p-0",
+						"bg-card text-card-foreground relative box-border flex items-center gap-x-3.5 rounded-md border",
+						clone && "rounded pr-3.5 shadow",
+						ghost && indicator && "bg-primary relative h-2",
 						ghost && !indicator && "bg-transparent shadow-none"
 					)}
-					ref={ref}
 					style={style}
 				>
-					<Button {...handleProps}>
-						<Grab />
+					<Button
+						className={cn("w-8 min-w-8 rounded-r-none", { "opacity-0": ghost && indicator })}
+						size='icon'
+						variant='secondary'
+						{...handleProps}
+					>
+						<GripVertical className='h-5 w-5' />
 					</Button>
+					<div className={cn("flex grow items-center gap-x-2", { "opacity-0": ghost && indicator })}>
+						<span className='overflow-hidden truncate'>{value}</span>
+						{onCollapse && (
+							<Button
+								className={cn(
+									"ease transition-transform duration-300",
+									collapsed && "rotate-180 transform"
+								)}
+								size='icon'
+								variant='ghost'
+								onClick={onCollapse}
+							>
+								<ChevronDown className='h-5 w-5' />
+							</Button>
+						)}
+					</div>
 
-					{onCollapse && (
-						<Button
-							className={cn(
-								"ease transition-transform duration-300",
-								collapsed && "rotate-[-90deg] transform"
-							)}
-							onClick={onCollapse}
-						>
-							<ChevronDown />
-						</Button>
-					)}
-					<span className='flex-grow overflow-hidden truncate pl-2'>{value}</span>
 					{!clone && onRemove && (
-						<Button onClick={onRemove}>
-							<X />
-						</Button>
+						<DropdownMenu>
+							<DropdownMenuTrigger
+								className={cn({ "opacity-0": ghost && indicator })}
+								asChild={true}
+							>
+								<Button
+									aria-label={trans("Menu")}
+									size='icon'
+									variant='ghost'
+								>
+									<Ellipsis className='h-5 w-5' />
+								</Button>
+							</DropdownMenuTrigger>
+							<DropdownMenuContent>
+								<DropdownMenuItem onClick={onRemove}>{trans("Delete")}</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					)}
-					{clone && childCount && childCount > 1 ? (
-						<span className='absolute -right-[10px] -top-[10px] flex h-6 w-6 items-center justify-center rounded-full bg-[#2389ff] text-sm font-semibold text-white'>
-							{childCount}
-						</span>
-					) : null}
 				</div>
 			</li>
 		);

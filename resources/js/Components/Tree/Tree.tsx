@@ -158,42 +158,44 @@ export function SortableTree({
 			onDragEnd={handleDragEnd}
 			onDragCancel={handleDragCancel}
 		>
-			<SortableContext
-				items={sortedIds}
-				strategy={verticalListSortingStrategy}
-			>
-				{flattenedItems.map(({ id, children, collapsed, depth }) => (
-					<TreeNodeSortable
-						key={id}
-						id={id}
-						value={id}
-						depth={id === activeId && projected ? projected.depth : depth}
-						indentationWidth={indentationWidth}
-						indicator={indicator}
-						collapsed={Boolean(collapsed && children.length)}
-						onCollapse={collapsible && children.length ? () => handleCollapse(id) : undefined}
-						onRemove={removable ? () => handleRemove(id) : undefined}
-					/>
-				))}
-				{createPortal(
-					<DragOverlay
-						dropAnimation={dropAnimationConfig}
-						modifiers={indicator ? [adjustTranslate] : undefined}
-					>
-						{activeId && activeItem ? (
-							<TreeNodeSortable
-								id={activeId}
-								depth={activeItem.depth}
-								clone
-								childCount={getChildCount(items, activeId) + 1}
-								value={activeId.toString()}
-								indentationWidth={indentationWidth}
-							/>
-						) : null}
-					</DragOverlay>,
-					document.body
-				)}
-			</SortableContext>
+			<ul>
+				<SortableContext
+					items={sortedIds}
+					strategy={verticalListSortingStrategy}
+				>
+					{flattenedItems.map(({ id, children, collapsed, depth }) => (
+						<TreeNodeSortable
+							key={id}
+							id={id}
+							value={id}
+							depth={id === activeId && projected ? projected.depth : depth}
+							indentationWidth={indentationWidth}
+							indicator={indicator}
+							collapsed={Boolean(collapsed && children.length)}
+							onCollapse={collapsible && children.length ? () => handleCollapse(id) : undefined}
+							onRemove={removable ? () => handleRemove(id) : undefined}
+						/>
+					))}
+					{createPortal(
+						<DragOverlay
+							dropAnimation={dropAnimationConfig}
+							modifiers={indicator ? [adjustTranslate] : undefined}
+						>
+							{activeId && activeItem ? (
+								<TreeNodeSortable
+									id={activeId}
+									depth={activeItem.depth}
+									clone
+									childCount={getChildCount(items, activeId) + 1}
+									value={activeId.toString()}
+									indentationWidth={indentationWidth}
+								/>
+							) : null}
+						</DragOverlay>,
+						document.body
+					)}
+				</SortableContext>
+			</ul>
 		</DndContext>
 	);
 
