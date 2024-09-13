@@ -79,13 +79,7 @@ interface Props {
 	removable?: boolean;
 }
 
-export function SortableTree({
-	collapsible,
-	defaultItems,
-	indicator = false,
-	indentationWidth = 50,
-	removable,
-}: Props) {
+export function SortableTree({ collapsible, defaultItems, indicator = true, indentationWidth = 50, removable }: Props) {
 	const [items, setItems] = React.useState(() => defaultItems);
 	const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
 	const [overId, setOverId] = React.useState<UniqueIdentifier | null>(null);
