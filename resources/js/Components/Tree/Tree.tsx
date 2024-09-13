@@ -1,5 +1,6 @@
 import { createPortal } from "react-dom";
 import { CSS } from "@dnd-kit/utilities";
+import { get } from "lodash";
 import { SortableContext, arrayMove, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import * as React from "react";
 import keyboardCoordinates from "./keyboardCoordinates";
@@ -71,16 +72,25 @@ const dropAnimationConfig: DropAnimation = {
 	},
 };
 
-interface Props {
+export interface SortableTreeProps {
 	collapsible?: boolean;
-	defaultItems: NodeType[];
 	indentationWidth?: number;
 	indicator?: boolean;
+	labelKey?: string;
 	removable?: boolean;
+	value: NodeType[];
+	setValue: (value: NodeType[]) => void;
 }
 
-export function SortableTree({ collapsible, defaultItems, indicator = true, indentationWidth = 50, removable }: Props) {
-	const [items, setItems] = React.useState(() => defaultItems);
+export function SortableTree({
+	collapsible = true,
+	indentationWidth = 2,
+	indicator = true,
+	labelKey = "id",
+	removable,
+	value,
+	setValue,
+}: SortableTreeProps) {
 	const [activeId, setActiveId] = React.useState<UniqueIdentifier | null>(null);
 	const [overId, setOverId] = React.useState<UniqueIdentifier | null>(null);
 	const [offsetLeft, setOffsetLeft] = React.useState(0);
@@ -90,14 +100,14 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 	} | null>(null);
 
 	const flattenedItems = React.useMemo(() => {
-		const flattenedTree = flattenTree(items);
+		const flattenedTree = flattenTree(value);
 		const collapsedItems = flattenedTree.reduce<string[]>(
 			(acc, { children, collapsed, id }) => (collapsed && children.length ? [...acc, id] : acc),
 			[]
 		);
 
 		return removeChildrenOf(flattenedTree, activeId ? [activeId, ...collapsedItems] : collapsedItems);
-	}, [activeId, items]);
+	}, [activeId, value]);
 	const projected =
 		activeId && overId ? getProjection(flattenedItems, activeId, overId, offsetLeft, indentationWidth) : null;
 	const sensorContext: SensorContext = React.useRef({
@@ -105,6 +115,7 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 		offset: offsetLeft,
 	});
 	const [coordinateGetter] = React.useState(() => keyboardCoordinates(sensorContext, indicator, indentationWidth));
+
 	const sensors = useSensors(
 		useSensor(PointerSensor),
 		useSensor(KeyboardSensor, {
@@ -157,17 +168,17 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 					items={sortedIds}
 					strategy={verticalListSortingStrategy}
 				>
-					{flattenedItems.map(({ id, children, collapsed, depth }) => (
+					{flattenedItems.map((item) => (
 						<TreeNodeSortable
-							key={id}
-							id={id}
-							value={id}
-							depth={id === activeId && projected ? projected.depth : depth}
+							key={item.id}
+							id={item.id}
+							value={get(item, labelKey)}
+							depth={item.id === activeId && projected ? projected.depth : item.depth}
 							indentationWidth={indentationWidth}
 							indicator={indicator}
-							collapsed={Boolean(collapsed && children.length)}
-							onCollapse={collapsible && children.length ? () => handleCollapse(id) : undefined}
-							onRemove={removable ? () => handleRemove(id) : undefined}
+							collapsed={Boolean(item.collapsed && item.children.length)}
+							onCollapse={collapsible && item.children.length ? () => handleCollapse(item.id) : undefined}
+							onRemove={removable ? () => handleRemove(item.id) : undefined}
 						/>
 					))}
 					{createPortal(
@@ -178,11 +189,11 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 							{activeId && activeItem ? (
 								<TreeNodeSortable
 									id={activeId}
+									childCount={getChildCount(value, activeId) + 1}
+									clone={true}
 									depth={activeItem.depth}
-									clone
-									childCount={getChildCount(items, activeId) + 1}
-									value={activeId.toString()}
 									indentationWidth={indentationWidth}
+									value={get(activeItem, labelKey)}
 								/>
 							) : null}
 						</DragOverlay>,
@@ -222,7 +233,7 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 
 		if (projected && over) {
 			const { depth, parentId } = projected;
-			const clonedItems: FlattenedItem[] = JSON.parse(JSON.stringify(flattenTree(items)));
+			const clonedItems: FlattenedItem[] = JSON.parse(JSON.stringify(flattenTree(value)));
 			const overIndex = clonedItems.findIndex(({ id }) => id === over.id);
 			const activeIndex = clonedItems.findIndex(({ id }) => id === active.id);
 			const activeTreeNode = clonedItems[activeIndex];
@@ -232,7 +243,7 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 			const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);
 			const newItems = buildTree(sortedItems);
 
-			setItems(newItems);
+			setValue(newItems);
 		}
 	}
 
@@ -250,12 +261,12 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 	}
 
 	function handleRemove(id: UniqueIdentifier) {
-		setItems((items) => removeItem(items, id));
+		setValue(removeItem(value, id));
 	}
 
 	function handleCollapse(id: UniqueIdentifier) {
-		setItems((items) =>
-			setProperty(items, id, "collapsed", (value) => {
+		setValue(
+			setProperty(value, id, "collapsed", (value) => {
 				return !value;
 			})
 		);
@@ -278,7 +289,7 @@ export function SortableTree({ collapsible, defaultItems, indicator = true, inde
 				}
 			}
 
-			const clonedItems: FlattenedItem[] = JSON.parse(JSON.stringify(flattenTree(items)));
+			const clonedItems: FlattenedItem[] = JSON.parse(JSON.stringify(flattenTree(value)));
 			const overIndex = clonedItems.findIndex(({ id }) => id === overId);
 			const activeIndex = clonedItems.findIndex(({ id }) => id === activeId);
 			const sortedItems = arrayMove(clonedItems, activeIndex, overIndex);

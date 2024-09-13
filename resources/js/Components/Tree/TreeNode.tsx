@@ -62,7 +62,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 				)}
 				style={
 					{
-						paddingLeft: `${depth * 2}rem`,
+						paddingLeft: `${depth * indentationWidth}rem`,
 					} as React.CSSProperties
 				}
 				{...props}
@@ -80,6 +80,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 					<Button
 						className={cn("w-8 min-w-8 rounded-r-none", { "opacity-0": ghost && indicator })}
 						size='icon'
+						type='button'
 						variant='secondary'
 						{...handleProps}
 					>
@@ -94,6 +95,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 									collapsed && "rotate-180 transform"
 								)}
 								size='icon'
+								type='button'
 								variant='ghost'
 								onClick={onCollapse}
 							>
@@ -111,6 +113,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 								<Button
 									aria-label={trans("Menu")}
 									size='icon'
+									type='button'
 									variant='ghost'
 								>
 									<Ellipsis className='h-5 w-5' />
