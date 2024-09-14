@@ -87,7 +87,7 @@ const TreeNode = React.forwardRef<HTMLDivElement, TreeNodeProps>(
 						<GripVertical className='h-5 w-5' />
 					</Button>
 					<div className={cn("flex grow items-center gap-x-2", { "opacity-0": ghost && indicator })}>
-						<span className='overflow-hidden truncate'>{value}</span>
+						<span className='overflow-hidden truncate text-sm'>{value}</span>
 						{onCollapse && (
 							<Button
 								className={cn(
