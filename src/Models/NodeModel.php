@@ -200,7 +200,7 @@ abstract class NodeModel extends Model
     /**
      * @return MorphTo
      */
-    final public function target(): MorphTo
+    public function target(): MorphTo
     {
         return $this->morphTo(
             self::RELATIONSHIP_TARGET,

@@ -64,19 +64,11 @@ export function getProjection(
 }
 
 function getMaxDepth({ previousItem }: { previousItem: FlattenedItem }) {
-	if (previousItem) {
-		return previousItem.depth + 1;
-	}
-
-	return 0;
+	return previousItem ? previousItem.depth + 1 : 0;
 }
 
 function getMinDepth({ nextItem }: { nextItem: FlattenedItem }) {
-	if (nextItem) {
-		return nextItem.depth;
-	}
-
-	return 0;
+	return nextItem ? nextItem.depth : 0;
 }
 
 function flatten(items: NodeType[], parentId: UniqueIdentifier | null = null, depth = 0): FlattenedItem[] {
